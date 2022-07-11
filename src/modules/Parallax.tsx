@@ -15,7 +15,7 @@ import {
 
 // ANCHOR: Main Component
 export function Parallax ({ 
-    startScroll, 
+    startScroll,
     endScroll, 
     speed, 
     opacity, 
