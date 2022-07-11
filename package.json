@@ -1,0 +1,105 @@
+{
+  "name": "react-parallax-fx",
+  "version": "1.0.0",
+  "author": "Dawid Janeczko",
+  "description": "React Parallax FX allows you to create Parallax components and animate them to your likings",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.esm.js",
+  "files": [
+    "dist"
+  ],
+  "private": false,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "rollup -c",
+    "test": "react-scripts test",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dyanechi/react-parallax-fx.git"
+  },
+  "keywords": [
+    "react",
+    "parallax",
+    "fx",
+    "scroll",
+    "effect",
+    "component",
+    "animate",
+    "animation",
+    "view",
+    "keyframe",
+    "fade",
+    "in",
+    "out",
+    "jsx"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dyanechi/react-parallax-fx/issues"
+  },
+  "homepage": "https://github.com/dyanechi/react-parallax-fx",
+  "peerDependencies": {
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "@types/styled-components": "^5.1.25",
+    "react": "16.x.x || 17.x.x || 18.x.x",
+    "react-dom": "16.x.x || 17.x.x || 18.x.x",
+    "react-intersection-observer": "^9.3.5",
+    "styled-components": "^5.3.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.6",
+    "@rollup/plugin-commonjs": "^22.0.1",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@storybook/addon-actions": "^6.5.9",
+    "@storybook/addon-essentials": "^6.5.9",
+    "@storybook/addon-interactions": "^6.5.9",
+    "@storybook/addon-links": "^6.5.9",
+    "@storybook/builder-webpack5": "^6.5.9",
+    "@storybook/manager-webpack5": "^6.5.9",
+    "@storybook/react": "^6.5.9",
+    "@storybook/testing-library": "^0.0.13",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.11.43",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "@types/styled-components": "^5.1.25",
+    "babel-loader": "^8.2.5",
+    "postcss": "^8.4.14",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-intersection-observer": "^9.3.5",
+    "react-scripts": "5.0.1",
+    "rollup": "^2.76.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-typescript2": "^0.32.1",
+    "styled-components": "^5.3.5",
+    "typescript": "^4.7.4",
+    "web-vitals": "^2.1.4"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
