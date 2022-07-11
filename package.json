@@ -1,0 +1,78 @@
+{
+  "name": "react-parallax-fx",
+  "version": "1.0.0",
+  "author": "Dawid Janeczko",
+  "description": "React Parallax FX allows you to create Parallax components and animate them to your likings",
+  "types": "@types/index.ts",
+  "main": "src/index.ts",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dyanechi/react-parallax-fx.git"
+  },
+  "keywords": [
+    "react",
+    "parallax",
+    "fx",
+    "scroll",
+    "effect",
+    "component",
+    "animate",
+    "animation",
+    "view",
+    "keyframe",
+    "fade",
+    "in",
+    "out",
+    "jsx"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dyanechi/react-parallax-fx/issues"
+  },
+  "homepage": "https://github.com/dyanechi/react-parallax-fx",
+  "peerDependencies": {
+    "react": "16.x.x || 17.x.x || 18.x.x",
+    "react-dom": "16.x.x || 17.x.x || 18.x.x",
+    "react-intersection-observer": "^9.3.5"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.11.43",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "@types/styled-components": "^5.1.25",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-intersection-observer": "^9.3.5",
+    "react-scripts": "5.0.1",
+    "styled-components": "^5.3.5",
+    "typescript": "^4.7.4",
+    "web-vitals": "^2.1.4"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
