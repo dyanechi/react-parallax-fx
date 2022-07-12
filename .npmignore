@@ -1,4 +1,6 @@
 lib
 demo
-src/stories
+# src
 pkg
+.storybook
+# rollup.config.js

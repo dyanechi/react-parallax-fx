@@ -8,6 +8,8 @@
       "esnext"
     ],
     "declaration": true,
+    "declarationDir": "types",
+    "emitDeclarationOnly": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
