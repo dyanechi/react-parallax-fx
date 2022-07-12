@@ -14,7 +14,7 @@ import {
 
 
 // ANCHOR: Main Component
-export function Parallax ({ 
+const Parallax = ({ 
     startScroll,
     endScroll, 
     speed, 
@@ -26,14 +26,14 @@ export function Parallax ({
     filter,
     disabled,
     children 
-}: IParallaxProps) {
+}: IParallaxProps) => {
 
     // --- S T A T E S  &  V A R I A B L E S --- //
 
     const { ref, inView, entry } = useInView({
 
     })
-    console.log(inView);
+    
     const target = entry?.target as HTMLElement;
     const topScrollPosition = useWindowScrollPosition(1);
     const [ progress, setProgress ] = useState(0);
@@ -102,6 +102,7 @@ export function Parallax ({
     // ANIMATION EFFECTS
     const transition = () => {
         if (target) {
+            
             
             if (opacity) {
                 const calculated = lerp(...opacity, progress);
@@ -197,6 +198,7 @@ export function Parallax ({
     // INITIALIZE
     const initialize = () => {
         if(target) {
+            console.log(inView);
             const end = endScroll?.toString();
             const _endScroll = end ? end.includes('%')? (parseInt(end)/100)*target.offsetHeight : parseInt(end) : (target.offsetParent as HTMLElement).offsetHeight;
             setConfig({

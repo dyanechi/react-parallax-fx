@@ -41,7 +41,7 @@ interface IParallaxProps extends React.PropsWithChildren, IParralaxAnimationProp
     children?: any;
 }
 
-declare function Parallax({ startScroll, endScroll, speed, opacity, transform, offset, background, gradient, filter, disabled, children }: IParallaxProps): JSX.Element;
+declare const Parallax: ({ startScroll, endScroll, speed, opacity, transform, offset, background, gradient, filter, disabled, children }: IParallaxProps) => JSX.Element;
 
 declare const getRGBA: (color: Color) => RGBA;
 

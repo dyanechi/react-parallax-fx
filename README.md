@@ -102,7 +102,9 @@ It might change in the future versions.
 ## Parallax Supported Effects
 Most of the transitions are made to have the easiest syntax. Effects take an array with `start` and `end` properties to transition between for a specified amount of time (length of the component or custom length/offset values).
 
-`opacity?: [start: number, end: number];`
+```typescript
+opacity?: [start: number, end: number]
+```
 Transition between transparent and opaque elements. Values range is `0 - 1`.
 
 ```typescript
