@@ -4,7 +4,7 @@ import { useWindowScrollPosition } from '../hooks';
 
 import {
     IParallaxProps,
-} from '../@types';
+} from '../types';
 
 import {
     lerp,

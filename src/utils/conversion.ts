@@ -1,7 +1,7 @@
 import {
     Color,
     RGBA
-} from '../@types';
+} from '../types';
 
 export const getRGBA = (color: Color): RGBA => {
     const arr: number[] = [];

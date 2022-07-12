@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import React from 'react';
 
 declare type RGBA = [red: number, green: number, blue: number, alpha: number];
@@ -40,5 +41,8 @@ interface IParallaxProps extends React.PropsWithChildren, IParralaxAnimationProp
     children?: any;
 }
 
-export { Color, IParallaxProps, IParralaxAnimationProps, RGBA };
-//# sourceMappingURL=index.d.ts.map
+declare function Parallax({ startScroll, endScroll, speed, opacity, transform, offset, background, gradient, filter, disabled, children }: IParallaxProps): JSX.Element;
+
+declare const getRGBA: (color: Color) => RGBA;
+
+export { Parallax, getRGBA };
