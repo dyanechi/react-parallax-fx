@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dyanechi/react-parallax-fx.git"
+    "url": "git+https://github.com/dyanechi/react-parallax-pro.git"
   },
   "keywords": [
     "react",
@@ -37,9 +37,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dyanechi/react-parallax-fx/issues"
+    "url": "https://github.com/dyanechi/react-parallax-pro/issues"
   },
-  "homepage": "https://github.com/dyanechi/react-parallax-fx",
+  "homepage": "https://github.com/dyanechi/react-parallax-pro",
   "peerDependencies": {
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
