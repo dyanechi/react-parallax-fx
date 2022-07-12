@@ -41,3 +41,4 @@ interface IParallaxProps extends React.PropsWithChildren, IParralaxAnimationProp
 }
 
 export { Color, IParallaxProps, IParralaxAnimationProps, RGBA };
+//# sourceMappingURL=index.d.ts.map
