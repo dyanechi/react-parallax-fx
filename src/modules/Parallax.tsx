@@ -50,7 +50,7 @@ export function Parallax ({
             case 'top': return topScrollPosition;
             case 'center': return topScrollPosition + (window.innerHeight/2);
             case 'bottom': return topScrollPosition + window.innerHeight;
-            default: return customScrollPosition(m) || topScrollPosition;
+            default: return customScrollPosition(m) || topScrollPosition + window.innerHeight;
         }
     }
 

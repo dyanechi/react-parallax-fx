@@ -1,6 +1,6 @@
 {
   "name": "react-parallax-pro",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Dawid Janeczko",
   "description": "React Parallax FX Pro allows you to create Parallax components and animate them to your likings",
   "main": "dist/index.js",
