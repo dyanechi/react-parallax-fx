@@ -57,28 +57,34 @@ Then you'll want to wrap your component between `<Parallax> MyComponent </Parall
 
 Inside the `pxConfig` you can pass following arguments:
 
-`startScroll?: 'top' | 'center' | 'bottom' | number`
+```typescript
+startScroll?: 'top' | 'center' | 'bottom' | number`
+```
 Specifies when to detect element based on scroll and window position.
 For example if `bottom` is set, elements will start transitioning when entering visible area at bottom of the window.
 If `center` is set, elements that enter middle of the screen will start transitioning, etc.
 Defaults to `bottom`.
 
-
-`endScroll?: number | '${number}%' `
+```typescript
+endScroll?: number | '${number}%' 
+```
 Specifies how long (in px) the transition will take.
 Defaults to `100%` of the container's `height`.
 
-
-`offset?: number`
+```typescript
+offset?: number
+```
 It will offset animation by `number` of pixels before it starts transitioning.
 
-
-`disabled?: boolean`
+```typescript
+disabled?: boolean
+```
 If set to `true`, transition will NOT be performed.
 Defaults to `false`
 
-
-`children?: any;`
+```typescript
+children?: any;
+```
 Any JSX elements can currently be passed to `Parallax` block.
 It might change in the future versions.
 
@@ -104,8 +110,9 @@ transform?: {
 ```
 You must pass object `transform` and specify any translation you like in transition array.
 
-
-`background?: [ start: Color, end: Color ]`
+```typescript
+background?: [ start: Color, end: Color ]
+```
 Property `Color` MUST be either RGBA array:
 ```typescript 
     [r: number, g: number, b: number, a: number]
