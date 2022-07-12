@@ -3,11 +3,11 @@
 This package adds support to create Parallax Components in React. Although there might be a few similar packages on the market, not all of them are the right suit for every project.
 
 
-# What makes this one unique?
+## What makes this one unique?
 
 You can create more advanced scroll-based animations without breaking your existing styled elements/components. Simply wrap your components with `<Parallax>` and customize them to your likings.
 
-# Features
+## Features
 Some of the key Features include:
 - Scroll detection transitions 
 - - animate elements based on user's scroll
@@ -19,7 +19,7 @@ Some of the key Features include:
 - offset and delay animations
 - filter animations
 
-# Get Started
+## Get Started
 
 Add package to your dev dependencies
 
@@ -65,16 +65,22 @@ For example if `bottom` is set, elements will start transitioning when entering 
 If `center` is set, elements that enter middle of the screen will start transitioning, etc.
 Defaults to `bottom`.
 
+
+
 ```typescript
 endScroll?: number | '${number}%' 
 ```
 Specifies how long (in px) the transition will take.
 Defaults to `100%` of the container's `height`.
 
+
+
 ```typescript
 offset?: number
 ```
 It will offset animation by `number` of pixels before it starts transitioning.
+
+
 
 ```typescript
 disabled?: boolean
@@ -82,11 +88,14 @@ disabled?: boolean
 If set to `true`, transition will NOT be performed.
 Defaults to `false`
 
+
+
 ```typescript
 children?: any;
 ```
 Any JSX elements can currently be passed to `Parallax` block.
 It might change in the future versions.
+
 
 
 
@@ -142,7 +151,7 @@ filter?: {
 Allows to transition between filters. Currently only `blur` is supported.
 
 
-## NOT YET IMPLEMENTED
+### NOT YET IMPLEMENTED
 
 `keyframes?: IParralaxAnimationProps[] & {}`
 Will allow to create a set of animations.
