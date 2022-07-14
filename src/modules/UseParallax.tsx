@@ -8,12 +8,12 @@ const StyledParallax = styled.div`
   height: fit-content;
 `;
 
-export const Parallax = (props: IParallaxProps) => {
-  const { ref, status } = useParallax({ ...props });
+export const Parallax = ({children, className, ...rest}: IParallaxProps) => {
+  const { ref, status } = useParallax({ ...rest });
 
   return (
-    <StyledParallax ref={ref} className={props.className}>
-      {props.children && props.children(status)}
+    <StyledParallax ref={ref} className={className}>
+      {children && typeof children === 'function' ? children(status) : children}
     </StyledParallax>
   );
 };

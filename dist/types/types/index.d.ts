@@ -48,7 +48,7 @@ export interface ParallaxStatus {
     isTransitioning: boolean;
     inView: boolean;
 }
-export declare type IParallaxChildren = (status: ParallaxStatus) => JSX.Element;
+export declare type IParallaxChildren = ((status: ParallaxStatus) => JSX.Element) | JSX.Element | React.ReactNode;
 export interface IParallaxProps {
     startScroll?: "top" | "center" | "bottom" | number;
     endScroll?: HTMLValueType;

@@ -18,10 +18,8 @@ const Parallax: React.FC<IParallax> = ({
   gradient,
   filter,
   disabled,
-  keyframes,
   className,
   children,
-  ...rest
 }: IParallax) => {
   // --- S T A T E S  &  V A R I A B L E S --- //
 
@@ -259,11 +257,12 @@ const Parallax: React.FC<IParallax> = ({
         }}
         className={className}
       >
-        {children &&
+        {children && typeof children === 'function' ?
           children({
             isTransitioning: progress > 0 && progress < 1,
             inView,
-          })}
+          }) : children
+        }
       </div>
     </div>
   );
