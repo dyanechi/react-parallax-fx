@@ -6,3 +6,4 @@ pkg
 public
 webpack
 types
+.storybook
