@@ -1,4 +1,6 @@
 /// <reference types="react" />
+import React$1 from 'react';
+
 declare type RGBA = [red: number, green: number, blue: number, alpha: number];
 declare type Color = RGBA | string;
 declare type HTMLValueType = number | `${number}%` | string;
@@ -63,9 +65,20 @@ interface IParallaxProps {
     render?(): React.ReactElement<React.ReactNode>;
     callback?: () => void;
 }
+declare type IParallax = IParallaxProps & IParallaxAnimationProps;
+
+declare const Parallax$1: React$1.FC<IParallax>;
 
 declare const Parallax: ({ children, className, ...rest }: IParallaxProps) => JSX.Element;
 
+/**
+ * This hook allows you to turn any component into Parallax Component
+ */
+declare const useParallax: ({ startScroll, endScroll, fadeIn, fadeOut, keyframes, offset, disabled, callback, }: IParallaxProps) => {
+    ref: (node?: Element | null | undefined) => void;
+    status: ParallaxStatus;
+};
+
 declare const getRGBA: (color: Color) => RGBA;
 
-export { Parallax, getRGBA };
+export { Parallax$1 as Parallax, Parallax as UseParallax, getRGBA, useParallax };

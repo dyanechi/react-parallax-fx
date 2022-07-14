@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useWindowScrollPosition } from "../hooks";
-import { IParallax } from "../types";
+import { ILegacyParallax } from "../types";
 
 
 import { lerp, lerpRGBA } from "../utils";
 
 // ANCHOR: Main Component
-const Parallax: React.FC<IParallax> = ({
+const Parallax: React.FC<ILegacyParallax> = ({
   startScroll,
   endScroll,
   speed,
@@ -20,7 +20,7 @@ const Parallax: React.FC<IParallax> = ({
   disabled,
   className,
   children,
-}: IParallax) => {
+}: ILegacyParallax) => {
   // --- S T A T E S  &  V A R I A B L E S --- //
 
   const { ref, inView, entry } = useInView({});
@@ -90,20 +90,20 @@ const Parallax: React.FC<IParallax> = ({
     const result = progress < 0 ? 0 : progress > 1 ? 1 : progress;
     status.isTransitioning = !!(result > 0 && result < 1);
 
-    console.info(
-      "Progress!\n",
-      `start: ${start}\n`,
-      `end: ${end}\n`,
-      `scrollHeight: ${scrollHeight}\n`,
-      `config startScroll: ${config.startScroll}\n`,
-      `manual startScroll: ${topScrollPosition + window.innerHeight}\n`,
-      `automated startScroll: ${getStartScrollValue(startScroll || "top")}\n`,
-      `current: ${current}\n`,
-      `diff: ${diff}\n`,
-      `progress: ${progress}\n`,
-      `result: ${result}\n`,
-      `isTransitioning: ${status.isTransitioning}`
-    );
+    // console.info(
+    //   "Progress!\n",
+    //   `start: ${start}\n`,
+    //   `end: ${end}\n`,
+    //   `scrollHeight: ${scrollHeight}\n`,
+    //   `config startScroll: ${config.startScroll}\n`,
+    //   `manual startScroll: ${topScrollPosition + window.innerHeight}\n`,
+    //   `automated startScroll: ${getStartScrollValue(startScroll || "top")}\n`,
+    //   `current: ${current}\n`,
+    //   `diff: ${diff}\n`,
+    //   `progress: ${progress}\n`,
+    //   `result: ${result}\n`,
+    //   `isTransitioning: ${status.isTransitioning}`
+    // );
 
     setProgress(result);
   };
@@ -143,7 +143,7 @@ const Parallax: React.FC<IParallax> = ({
 
         console.log(
           `${(type && type) || "linear"}-gradient(${_dir}${rgbaArray.join(
-            ","
+            " "
           )})`
         );
         target.style.background = `${
