@@ -65,9 +65,39 @@ interface IParallaxProps {
     render?(): React.ReactElement<React.ReactNode>;
     callback?: () => void;
 }
-declare type IParallax = IParallaxProps & IParallaxAnimationProps;
+interface ILegacyParallax {
+    startScroll?: "top" | "center" | "bottom" | number;
+    endScroll?: HTMLValueType;
+    speed?: number;
+    disabled?: boolean;
+    offset?: number;
+    opacity?: [start: number, end: number];
+    transform?: {
+        translate?: [
+            X: [start: number, end: number],
+            Y: [start: number, end: number]
+        ];
+        translateX?: [start: number, end: number];
+        translateY?: [start: number, end: number];
+        scale?: [start: number, end: number];
+        rotate?: [start: number, end: number];
+    };
+    background?: [start: Color, end: Color];
+    dir?: [start: number, end: number] | undefined;
+    gradient?: {
+        type?: 'linear' | 'radial' | undefined;
+        dir?: [start: number, end: number] | undefined;
+        start: Color[];
+        end: Color[];
+    };
+    filter?: {
+        blur?: [start: number, end: number];
+    };
+    className?: string;
+    children?: IParallaxChildren;
+}
 
-declare const Parallax$1: React$1.FC<IParallax>;
+declare const Parallax$1: React$1.FC<ILegacyParallax>;
 
 declare const Parallax: ({ children, className, ...rest }: IParallaxProps) => JSX.Element;
 
