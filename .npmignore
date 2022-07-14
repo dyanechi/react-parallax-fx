@@ -5,3 +5,15 @@ pkg
 .storybook
 src/stories
 # rollup.config.js
+
+node_modules
+src/stories/*
+demo
+lib
+pkg
+public
+webpack
+types
+.storybook
+src/modules/ParallaxBckup.tsx
+bckup

@@ -4,7 +4,6 @@ export type Color = RGBA | string;
 // --- Generic Types --- //
 export type HTMLValueType = number | `${number}%` | string;
 
-
 // --- Tranformation Interfaces --- //
 
 export interface TransformProps {
@@ -25,7 +24,7 @@ export interface GradientProps {
   end: Color[];
 }
 
-// type DropShadowType = 
+// type DropShadowType =
 //   `${number}px ${number}px ${number}px` |
 //   `${number}px ${number}px ${number}px` & Color
 
@@ -43,8 +42,6 @@ export interface FilterProps {
 }
 // --------------------------------------
 
-
-
 // --- Animation Interfaces --- //
 
 export interface IParallaxAnimation {
@@ -60,13 +57,11 @@ export interface IParallaxAnimationProps extends IParallaxAnimation {
   length: HTMLValueType;
 }
 
-
 export interface ParallaxKeyframe {
   length: HTMLValueType;
   animation: IParallaxAnimationProps;
 }
 // ---------------------------------------
-
 
 // --- Parallax Interfaces --- //
 
@@ -83,7 +78,7 @@ export interface IParallaxProps {
   speed?: number;
   disabled?: boolean;
   offset?: number;
-  
+
   fadeIn?: IParallaxAnimationProps;
   fadeOut?: IParallaxAnimationProps;
   keyframes?: ParallaxKeyframe[];
@@ -91,11 +86,10 @@ export interface IParallaxProps {
   className?: string;
   children?: IParallaxChildren;
 
-  render?(): React.ReactElement<React.ReactNode>
+  render?(): React.ReactElement<React.ReactNode>;
 
   callback?: () => void;
 }
 
-
-export type IParallax = IParallaxProps & IParallaxAnimationProps
+export type IParallax = IParallaxProps & IParallaxAnimationProps;
 // -------------------------------------------------

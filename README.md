@@ -2,6 +2,11 @@
 
 This package adds support to create Parallax Components in React. Although there might be a few similar packages on the market, not all of them are the right suit for every project.
 
+## Version ^1.1.0
+This version brings new experimental API including `useParallax` hook and `<UseParallax>` component. While this project is still in development, `Parallax` component from previous version works as in specification below in order to prevent conflicts.
+
+New API will include ability to control `fadeIn` and `fadeOut` animation to allow more customized animations.
+The update on new functionality will be available in future updates.
 
 ## What makes this one unique?
 

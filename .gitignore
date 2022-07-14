@@ -1,5 +1,5 @@
 node_modules
-src/stories
+src/stories/*
 demo
 lib
 pkg
@@ -7,3 +7,5 @@ public
 webpack
 types
 .storybook
+src/modules/ParallaxBckup.tsx
+bckup
