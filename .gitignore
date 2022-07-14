@@ -1,2 +1,8 @@
 node_modules
 src/stories
+demo
+lib
+pkg
+public
+webpack
+types

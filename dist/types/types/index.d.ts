@@ -1,4 +1,4 @@
-import React from 'react';
+/// <reference types="react" />
 export declare type RGBA = [red: number, green: number, blue: number, alpha: number];
 export declare type Color = RGBA | string;
 export interface IParralaxAnimationProps {
@@ -14,12 +14,9 @@ export interface IParralaxAnimationProps {
         rotate?: [start: number, end: number];
     };
     offset?: number;
-    background?: [
-        start: Color,
-        end: Color
-    ];
+    background?: [start: Color, end: Color];
     gradient?: {
-        type?: 'linear' | 'radial' | undefined;
+        type?: "linear" | "radial" | undefined;
         dir?: number | undefined;
         start: Color[];
         end: Color[];
@@ -29,12 +26,13 @@ export interface IParralaxAnimationProps {
     };
 }
 export interface IParallaxProps extends React.PropsWithChildren, IParralaxAnimationProps {
-    startScroll?: 'top' | 'center' | 'bottom' | number;
+    startScroll?: "top" | "center" | "bottom" | number;
     endScroll?: number | `${number}%`;
     speed?: number;
     disabled?: boolean;
     keyframes?: IParralaxAnimationProps[] & {};
     fadeIn?: IParralaxAnimationProps;
     fadeOut?: IParralaxAnimationProps;
+    className?: string;
     children?: any;
 }

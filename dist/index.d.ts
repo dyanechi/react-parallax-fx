@@ -1,6 +1,4 @@
 /// <reference types="react" />
-import React from 'react';
-
 declare type RGBA = [red: number, green: number, blue: number, alpha: number];
 declare type Color = RGBA | string;
 interface IParralaxAnimationProps {
@@ -16,12 +14,9 @@ interface IParralaxAnimationProps {
         rotate?: [start: number, end: number];
     };
     offset?: number;
-    background?: [
-        start: Color,
-        end: Color
-    ];
+    background?: [start: Color, end: Color];
     gradient?: {
-        type?: 'linear' | 'radial' | undefined;
+        type?: "linear" | "radial" | undefined;
         dir?: number | undefined;
         start: Color[];
         end: Color[];
@@ -31,7 +26,7 @@ interface IParralaxAnimationProps {
     };
 }
 interface IParallaxProps extends React.PropsWithChildren, IParralaxAnimationProps {
-    startScroll?: 'top' | 'center' | 'bottom' | number;
+    startScroll?: "top" | "center" | "bottom" | number;
     endScroll?: number | `${number}%`;
     speed?: number;
     disabled?: boolean;
@@ -41,7 +36,7 @@ interface IParallaxProps extends React.PropsWithChildren, IParralaxAnimationProp
     children?: any;
 }
 
-declare const Parallax: ({ startScroll, endScroll, speed, opacity, transform, offset, background, gradient, filter, disabled, children }: IParallaxProps) => JSX.Element;
+declare const Parallax: ({ startScroll, endScroll, speed, opacity, transform, offset, background, gradient, filter, disabled, children, }: IParallaxProps) => JSX.Element;
 
 declare const getRGBA: (color: Color) => RGBA;
 

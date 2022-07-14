@@ -9,7 +9,6 @@
     ],
     "declaration": true,
     "declarationDir": "types",
-    "emitDeclarationOnly": true,
     "skipLibCheck": false,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -28,11 +27,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react",
-    "outDir": "dist/",
-    "sourceMap": true
+    "outDir": "dist",
+    "sourceMap": true,
+    "emitDeclarationOnly": true
   },
-  "include": [
-    "src"
-  ],
-  "exclude": ["node_modules", "demo"]
+  "include": [ "src" ],
+  "exclude": ["node_modules", "demo", "stories"]
 }
