@@ -25,9 +25,9 @@ export interface GradientProps {
   end: Color[];
 }
 
-type DropShadowType = 
-  `${number}px ${number}px ${number}px` |
-  `${number}px ${number}px ${number}px` & Color
+// type DropShadowType = 
+//   `${number}px ${number}px ${number}px` |
+//   `${number}px ${number}px ${number}px` & Color
 
 export interface FilterProps {
   blur?: [start: number, end: number];
