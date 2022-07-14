@@ -125,5 +125,5 @@ export interface ILegacyParallax {
   children?: IParallaxChildren;
 } 
 
-export type IParallax = IParallaxProps & IParallaxAnimationProps;
+export type IParallax = IParallaxProps & IParallaxAnimation;
 // -------------------------------------------------
