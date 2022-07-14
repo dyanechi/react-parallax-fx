@@ -64,7 +64,7 @@ interface IParallaxProps {
     callback?: () => void;
 }
 
-declare const Parallax: (props: IParallaxProps) => JSX.Element;
+declare const Parallax: ({ children, className, ...rest }: IParallaxProps) => JSX.Element;
 
 declare const getRGBA: (color: Color) => RGBA;
 
