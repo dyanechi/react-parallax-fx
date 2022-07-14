@@ -70,7 +70,7 @@ export interface ParallaxStatus {
   inView: boolean;
 }
 
-export type IParallaxChildren = (status: ParallaxStatus) => JSX.Element;
+export type IParallaxChildren = ((status: ParallaxStatus) => JSX.Element) | JSX.Element | React.ReactNode;
 
 export interface IParallaxProps {
   startScroll?: "top" | "center" | "bottom" | number;
