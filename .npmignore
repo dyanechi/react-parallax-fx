@@ -7,7 +7,7 @@ src/stories
 # rollup.config.js
 
 node_modules
-src/stories/*
+src/stories
 demo
 lib
 pkg

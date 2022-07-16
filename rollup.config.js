@@ -22,7 +22,7 @@ const commonPlugins = () => [
     extensions: EXTENSIONS,
     exclude: [
         "node_modules/**", "src/stories/**", ".storybook/**",
-        "bckup/**", "webpack/**", "types/**"
+        "bckup/**", "webpack/**", "types/**", "dist/**",
     ],
   }),
   commonjs({
@@ -52,6 +52,7 @@ const config = [
         format: "umd",
         name: "react-parallax-pro",
         exports: "named",
+        sourcemap: true,
         globals: {
           react: "React",
           "react-dom": "ReactDOM",
@@ -60,7 +61,6 @@ const config = [
       },
     ],
     plugins: [...commonPlugins()],
-
     external: Object.keys(pkg.peerDependencies),
   },
   {
@@ -79,10 +79,11 @@ const config = [
       },
     ],
     plugins: [...commonPlugins()],
+    external: Object.keys(pkg.peerDependencies),
   },
   {
     input: "dist/types/index.d.ts",
-    output: [{ file: "dist/index.d.ts", format: "esm" }],
+    output: [{ file: "dist/index.d.ts", format: "umd" }],
     external: [/\.css$/],
     plugins: [dts()],
   },

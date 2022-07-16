@@ -1,9 +1,38 @@
 /// <reference types="react" />
 import React$1 from 'react';
 
-declare type RGBA = [red: number, green: number, blue: number, alpha: number];
-declare type Color = RGBA | string;
-declare type HTMLValueType = number | `${number}%` | string;
+interface ILegacyParallax {
+    startScroll?: "top" | "center" | "bottom" | number;
+    endScroll?: HTMLValueType;
+    speed?: number;
+    disabled?: boolean;
+    offset?: number;
+    opacity?: [start: number, end: number];
+    transform?: {
+        translate?: [
+            X: [start: number, end: number],
+            Y: [start: number, end: number]
+        ];
+        translateX?: [start: number, end: number];
+        translateY?: [start: number, end: number];
+        scale?: [start: number, end: number];
+        rotate?: [start: number, end: number];
+    };
+    background?: [start: Color, end: Color];
+    dir?: [start: number, end: number] | undefined;
+    gradient?: {
+        type?: 'linear' | 'radial' | undefined;
+        dir?: [start: number, end: number] | undefined;
+        start: Color[];
+        end: Color[];
+    };
+    filter?: {
+        blur?: [start: number, end: number];
+    };
+    className?: string;
+    children?: IParallaxChildren;
+}
+
 interface TransformProps {
     translate?: [
         X: [start: number, end: number],
@@ -42,10 +71,6 @@ interface IParallaxAnimation {
 interface IParallaxAnimationProps extends IParallaxAnimation {
     length: HTMLValueType;
 }
-interface ParallaxKeyframe {
-    length: HTMLValueType;
-    animation: IParallaxAnimationProps;
-}
 interface ParallaxStatus {
     isTransitioning: boolean;
     inView: boolean;
@@ -55,60 +80,61 @@ interface IParallaxProps {
     startScroll?: "top" | "center" | "bottom" | number;
     endScroll?: HTMLValueType;
     speed?: number;
-    disabled?: boolean;
     offset?: number;
+    disabled?: boolean;
+    extend?: boolean;
     fadeIn?: IParallaxAnimationProps;
     fadeOut?: IParallaxAnimationProps;
-    keyframes?: ParallaxKeyframe[];
+    keyframes?: IParallaxKeyframe[];
     className?: string;
     children?: IParallaxChildren;
     render?(): React.ReactElement<React.ReactNode>;
     callback?: () => void;
 }
-interface ILegacyParallax {
-    startScroll?: "top" | "center" | "bottom" | number;
-    endScroll?: HTMLValueType;
-    speed?: number;
-    disabled?: boolean;
-    offset?: number;
-    opacity?: [start: number, end: number];
-    transform?: {
-        translate?: [
-            X: [start: number, end: number],
-            Y: [start: number, end: number]
-        ];
-        translateX?: [start: number, end: number];
-        translateY?: [start: number, end: number];
-        scale?: [start: number, end: number];
-        rotate?: [start: number, end: number];
-    };
-    background?: [start: Color, end: Color];
-    dir?: [start: number, end: number] | undefined;
+declare type IParallax = IParallaxProps & IParallaxAnimation;
+interface IParallaxKeyframeAttributes {
+    translate?: [X: number, Y: number];
+    translateX?: number;
+    translateY?: number;
+    scale?: number;
+    rotate?: number;
+    opacity?: number;
+    background?: Color;
     gradient?: {
+        colors: Color[];
         type?: 'linear' | 'radial' | undefined;
-        dir?: [start: number, end: number] | undefined;
-        start: Color[];
-        end: Color[];
+        dir?: number;
     };
-    filter?: {
-        blur?: [start: number, end: number];
-    };
-    className?: string;
-    children?: IParallaxChildren;
+    blur?: number;
+    brightness?: number;
+    contrast?: number;
+    grayscale?: number;
+    hueRotate?: number;
+    saturate?: number;
+    sepia?: number;
+    dropShadow?: [start: number, end: number];
+}
+interface IParallaxKeyframe extends IParallaxKeyframeAttributes {
+    length: HTMLValueType;
+    hold?: boolean;
 }
 
-declare const Parallax$1: React$1.FC<ILegacyParallax>;
+declare type RGBA = [red: number, green: number, blue: number, alpha: number];
+declare type Color = RGBA | string;
+declare type HTMLValueType = number | `${number}%` | string;
 
-declare const Parallax: ({ children, className, ...rest }: IParallaxProps) => JSX.Element;
+declare const Parallax: React$1.FC<ILegacyParallax>;
+
+declare const UseParallax: ({ children, className, ...rest }: IParallax) => JSX.Element;
 
 /**
  * This hook allows you to turn any component into Parallax Component
  */
-declare const useParallax: ({ startScroll, endScroll, fadeIn, fadeOut, keyframes, offset, disabled, callback, }: IParallaxProps) => {
+declare const useParallax: ({ startScroll, endScroll, fadeIn, fadeOut, keyframes, offset, disabled, extend, callback, }: IParallaxProps) => {
     ref: (node?: Element | null | undefined) => void;
     status: ParallaxStatus;
 };
 
 declare const getRGBA: (color: Color) => RGBA;
 
-export { Parallax$1 as Parallax, Parallax as UseParallax, getRGBA, useParallax };
+export { Parallax, UseParallax, getRGBA, useParallax };

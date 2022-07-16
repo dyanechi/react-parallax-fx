@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import {
   IParallaxAnimation,
+  IParallaxKeyframe,
   IParallaxProps,
   ParallaxStatus,
 } from "../../types";
-import { getHexColor } from "../../utils";
+import { getHexColor, keyframesToParallaxAnimation } from "../../utils";
 import { useWindowScrollPosition } from "../useWindowScrollPosition";
 import {
   animateBackground,
@@ -16,6 +17,7 @@ import {
   calculateProgress,
 } from "./helpers";
 import { toInt } from "./helpers/parsers";
+import { useKeyframes } from "./useKeyframes";
 
 /**
  * This hook allows you to turn any component into Parallax Component
@@ -29,6 +31,7 @@ export const useParallax = ({
   keyframes,
   offset,
   disabled,
+  extend,
   callback,
 }: IParallaxProps) => {
   // --- S T A T E S / V A R I A B L E S --- //
@@ -58,6 +61,8 @@ export const useParallax = ({
     scrollHeight: 0,
     // speed: (speed || 20) / 100,
   });
+
+  const keyConfig = useKeyframes<IParallaxKeyframe>();
 
   // --- G E T T E R S --- //
 
@@ -93,14 +98,14 @@ export const useParallax = ({
 
   function runAnimations(
     animations: IParallaxAnimation,
-    progress: { start: number; end: number; current: number }
+    progress: number
   ) {
     const { opacity, transform, background, gradient, filter } = animations;
-    const { current } = progress;
+    // const { current } = progress;
+    const current = progress;
 
-    opacity && (target.style.opacity = animateOpacity([...opacity], current));
-    transform &&
-      (target.style.transform = animateTransform({ ...transform }, current));
+    opacity && (target.style.opacity = animateOpacity([...opacity], current)).toString();
+    transform && (target.style.transform = animateTransform({ ...transform }, current));
     background &&
       (target.style.backgroundColor = animateBackground(
         [...background],
@@ -109,6 +114,23 @@ export const useParallax = ({
     gradient &&
       (target.style.background = animateGradient({ ...gradient }, current));
     filter && (target.style.filter = animateFilter({ ...filter }, current));
+  }
+
+  function cleanupAnimations() {
+    const resetIn = {
+      progress: fadeIn? 0 : fadeOut? 1 : 0,
+      animations: fadeIn? fadeIn : fadeOut? fadeOut : {opacity: [1, 1] as [start: number, end: number]}
+    }
+    const resetOut = {
+      progress: fadeOut? 0 : fadeIn? 1 : 0,
+      animations: fadeOut? fadeOut : fadeIn? fadeIn : {opacity: [1, 1] as [start: number, end: number]}
+    }
+
+    // console.log(resetIn, resetOut);
+    progress <= 0 && runAnimations(resetIn.animations, resetIn.progress);
+    progress >= 1 && runAnimations(resetOut.animations, resetOut.progress);
+
+    // console.log('animations clamped');
   }
 
   // --- P R O C S S I N G--- //
@@ -132,11 +154,12 @@ export const useParallax = ({
     canRun &&
       runAnimations(
         { ...rest },
-        {
-          start,
-          end,
-          current: subProgress,
-        }
+        subProgress
+        // {
+        //   start,
+        //   end,
+        //   current: subProgress,
+        // }
       );
   }
 
@@ -158,24 +181,84 @@ export const useParallax = ({
     canRun &&
       runAnimations(
         { ...rest },
-        {
-          start: 1 - end,
-          end: 1 - start,
-          current: subProgress,
-        }
+        subProgress
+        // {
+        //   start: 1 - end,
+        //   end: 1 - start,
+        //   current: subProgress,
+        // }
       );
 
     // console.log(length, offset, opacity, background, transform, gradient, filter);
   }
+  
+  // const [keyframesData, setKeyframesData] = useState({
+    //   totalLength: 0,
+    //   frames: new Array<IParallaxKeyframe>(),
+    //   currentFrame: 0,
+    //   extend: false,
+    // })
+  
+
+  function initializeKeyframes() {
+    if (!keyConfig.isInitialized) {
+      // There might be glitch here with keyframes 'length' value type
+      const frames = keyframes!.map(f => {
+        return { ...f, start: 0, length: toInt(f.length, target.offsetHeight) }
+      });
+      keyConfig.init(frames, (length => {
+        if (extend && length > config.scrollHeight) {
+          setConfig({
+            ...config,
+            scrollHeight: length,
+            endScroll: length
+          });
+        };
+      }));
+    }
+  }
+
 
   /**
    * Animate in between `fadeIn` and `fadeOut` transition
    */
   function keyframesAnimation() {
-    keyframes!.forEach((keyframe) => {
-      console.log(keyframe);
-    });
+    if (!keyConfig.isInitialized) return initializeKeyframes();
+    const { curFrame, nextFrame, curProgress } = keyConfig.getCurrentFrame(progress);
+    const m = keyframesToParallaxAnimation(curFrame, nextFrame);
+    let merged: IParallaxAnimation = {};
+    if (typeof curFrame !== 'number' && typeof nextFrame !== 'number') {
+      Object.entries(curFrame).forEach(([key,val]) => {
+        const o = {[key]: [curFrame[key], nextFrame[key]]}
+        merged = {...merged, ...o};
+      })
+      console.log(merged);
+      requestAnimationFrame(() => runAnimations(m, curProgress as number));
+    }
+    return merged;
+    // runAnimations()
+    // console.log(frame, curProgress)
+    // runAnimations()
   }
+  useEffect(() => {
+    if(keyConfig.isInitialized) {
+      console.info(
+        keyConfig.getCurrentFrame(0.6)
+        // keyConfig.getAllFrames()
+      )
+    }
+    // const { totalLength, isInitialized } = keyConfig.get;
+    // if (isInitialized && totalLength > config.scrollHeight) {
+    //   if (extend) {
+    //     console.info(`'extend' option is set to 'true'. Container will expand to match keyframes animation.\nOld value: ${config.endScroll}\nNew Value: ${totalLength}`);
+    //   } else {
+    //     throw new Error(`Keyframes must have total length shorter than total length of animation. \nKeyframes length: ${totalLength} \nAnimation length: ${config.endScroll} \nNote: Add 'extend' option to 'keyframes' if you'd like to automatically extend the container to match length of this animation.`);
+    //   }
+    // }
+    // console.info(`'keyframesData' initialization complete!`, keyConfig.get, config);
+  }, [keyConfig.isInitialized]);
+
+
 
   function getAnimationOptions(length: number, offset?: number) {
     const start = (offset || 0) / config.scrollHeight;
@@ -187,7 +270,7 @@ export const useParallax = ({
   function updateGlobalProgress() {
     const progress = calculateProgress(
       target.offsetTop,
-      target.offsetTop + config.endScroll,
+      config.endScroll,
       config.startScroll + topScrollPosition,
       offset,
       ({ isTransitioning }) => {
@@ -207,18 +290,21 @@ export const useParallax = ({
   }, [topScrollPosition]);
 
   // Call every time `progress` updates
-  useEffect(() => {
+  useLayoutEffect(() => {
     // Check if the progress is between 0 - 1 range
     if (status.isTransitioning) {
-      fadeIn && requestAnimationFrame(fadeInAnimation);
-      fadeOut && requestAnimationFrame(fadeOutAnimation);
-      keyframes && requestAnimationFrame(keyframesAnimation);
+      if (keyframes) requestAnimationFrame(keyframesAnimation)
+      else {
+        fadeIn && requestAnimationFrame(fadeInAnimation);
+        fadeOut && requestAnimationFrame(fadeOutAnimation);
+      }
     }
   }, [progress, status.isTransitioning, fadeIn, fadeOut, keyframes]);
 
   // Call a callback once transitioning status changed
-  useEffect(() => {
+  useLayoutEffect(() => {
     console.info(`Transitioning changed to: `, status.isTransitioning);
+    target && requestAnimationFrame(cleanupAnimations);
     callback && callback();
   }, [status.isTransitioning, callback]);
 
@@ -245,6 +331,7 @@ export const useParallax = ({
             endScroll: _endScroll,
             scrollHeight,
           });
+          cleanupAnimations()
         }
       );
 
@@ -253,6 +340,8 @@ export const useParallax = ({
           (fadeOut && fadeOut.background && fadeOut.background[0]) ||
           ""
       );
+
+      keyframes && keyframesAnimation();
     }
   };
   useEffect(() => initialize(), [target]);

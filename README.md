@@ -2,11 +2,42 @@
 
 This package adds support to create Parallax Components in React. Although there might be a few similar packages on the market, not all of them are the right suit for every project.
 
-## Version ^1.1.0
+## Version ^1.2.0
 This version brings new experimental API including `useParallax` hook and `<UseParallax>` component. While this project is still in development, `Parallax` component from previous version works as in specification below in order to prevent conflicts.
 
-New API will include ability to control `fadeIn` and `fadeOut` animation to allow more customized animations.
-The update on new functionality will be available in future updates.
+Starting this version we recommend to use `<UseParallax>` component which is utilizing the new `useParallax()` hook. You can import it to your project and use in sample like so:
+```typescript
+import { UseParallax } from 'react-parallax-pro'
+// ...
+
+const App = () => {
+    // ...
+
+    const animation = {
+        // Possible values: "bottom" | "center" | "top" | number
+        startScroll: "center",
+        fadeIn: { /* ... */ },
+        fadeOut: { /* ... */ },
+        keyframes: { /* ... */ },
+    }
+
+    return (
+        <UseParallax {...animation} />
+            {({isTransitioning, inView}) =>
+                <YourComponent>
+                    // ... The rest of components
+
+                    // You can pass exposed variables into components as well, ex:
+                </YourComponent>
+            }
+        </UseParallax>
+    )
+}
+
+```
+
+New API includes ability to control `fadeIn` and `fadeOut` animation to allow more customization.
+It also includes `keyframes` which is currently <b>experimental</b>
 
 ## What makes this one unique?
 
@@ -14,15 +45,18 @@ You can create more advanced scroll-based animations without breaking your exist
 
 ## Features
 Some of the key Features include:
-- Scroll detection transitions 
-- - animate elements based on user's scroll
-- Window + Scroll detection:
-- - choose to start animation when element is at top|center|bottom of the window
+- scroll detection transitions 
+- animate elements based on user's scroll
+- window + scroll detection
 - color transitions
-- gradient transitions
+- <b>background transitions<b>
+- <b>gradient transitions</b>
 - translate, rotate, scale transformations
 - offset and delay animations
 - filter animations
+- fade in transitions
+- fade out transitions
+- <b>*keyframed animations</b>
 
 ## Get Started
 
@@ -174,3 +208,10 @@ It will allow to specify easing animation for leaving the screen.
 # Support
 
 Plese visit github repository here: https://github.com/dyanechi/react-parallax-pro if you'd like to contribute or have any questions, issues or anything else :) 
+
+## TODO
+- Update API
+- Improve control over animations
+- Add easing functions
+- Fix small bugs
+- Optimize performance
