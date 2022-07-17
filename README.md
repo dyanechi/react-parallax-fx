@@ -215,10 +215,10 @@ This is a component that can wrap other components to provide <b>Parallax</b> co
 At the moment the usage is following: <br />
 Import:
 ```typescript
-    import { UseParallax } from 'react-parallax-pro`;
+    import { UseParallax } from "react-parallax-pro";
 ```
 
-Then use like so
+Then use like so:
 ```typescript
 <UseParallax {...pxConfig}>
     <YourComponent />
