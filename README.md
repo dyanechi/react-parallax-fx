@@ -217,20 +217,20 @@ Import:
 ```typescript
     import { UseParallax } from 'react-parallax-pro`;
 ```
-<br />
-Then use as so:
+
+Then use like so
 ```typescript
 <UseParallax {...pxConfig}>
     <YourComponent />
 </UseParallax>
 ```
-<br />
+
 You can also use <b>Function as children</b> technique to get returned value `status` that can be destructured to access following properties:
 
 - `isTransitioning: boolean;`
 - `inView: boolean;`
 All these values are <i>optional</i>, you can choose <i>any</i> and pass to other components.
-<br />
+
 Example:
 ```typescript
 <UseParallax {...pxConfig}>
@@ -240,15 +240,13 @@ Example:
         </YourComponent>
     )}
 </UseParallax>
-    
-```
-
 ```
 
 ## Keyframes
 Keyframes have slightly different API. Each keyframe <b>require</b> parameters: `length` and `animations`.
 </br>
-There is optional `extend: boolean` that if set to `true` will automatically expand container's animation length in order to fit the full transition. <br />
+There is optional `extend: boolean` that if set to `true` will automatically expand container's animation length in order to fit the full transition:
+
 Example usage:
 ```typescript
 const App = (props) => {
