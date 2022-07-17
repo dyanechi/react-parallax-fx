@@ -34,7 +34,6 @@ const App = () => {
         </UseParallax>
     )
 }
-
 ```
 
 New API includes ability to control `fadeIn` and `fadeOut` animation to allow more customization.
@@ -95,116 +94,8 @@ Then you'll want to wrap your component between `<Parallax> MyComponent </Parall
     }
 ```
 
-## Parallax Component's Config API
-
-Inside the `pxConfig` you can pass following arguments:
-
-```typescript
-startScroll?: 'top' | 'center' | 'bottom' | number`
-```
-Specifies when to detect element based on scroll and window position.
-For example if `bottom` is set, elements will start transitioning when entering visible area at bottom of the window.
-If `center` is set, elements that enter middle of the screen will start transitioning, etc.
-Defaults to `bottom`.
-<br />
-
-
-```typescript
-endScroll?: number | '${number}%' 
-```
-Specifies how long (in px) the transition will take.
-Defaults to `100%` of the container's `height`.
-<br />
-
-
-```typescript
-offset?: number
-```
-It will offset animation by `number` of pixels before it starts transitioning.
-<br />
-
-
-```typescript
-disabled?: boolean
-```
-If set to `true`, transition will NOT be performed.
-Defaults to `false`
-<br />
-
-
-```typescript
-children?: any;
-```
-Any JSX elements can currently be passed to `Parallax` block.
-It might change in the future versions.
-<br />
-
-
-
-## Parallax Supported Effects
-Most of the transitions are made to have the easiest syntax. Effects take an array with `start` and `end` properties to transition between for a specified amount of time (length of the component or custom length/offset values).
-
-```typescript
-opacity?: [start: number, end: number]
-```
-Transition between transparent and opaque elements. Values range is `0 - 1`.
-<br />
-
-```typescript
-transform?: {
-    translate?: [
-        X: [start: number, end: number],
-        Y: [start: number, end: number],
-    ];
-    translateX?: [start: number, end: number],
-    translateY?: [start: number, end: number],
-    scale?: [start: number, end: number],
-    rotate?: [start: number, end: number],
-}
-```
-You must pass object `transform` and specify any translation you like in transition array.
-<br />
-
-```typescript
-background?: [ start: Color, end: Color ]
-```
-Property `Color` MUST be either RGBA array:
-```typescript 
-    [r: number, g: number, b: number, a: number]
-``` 
-OR hexadecimal number `#000` | `#ffff` | `#rrggbb` | `#rrggbbaa`
-<br />
-
-
-```typescript
-gradient?: {
-    type?: 'linear' | 'radial' | undefined;
-    dir?: number | undefined;
-    start: Color[],
-    end: Color[]
-}
-```
-Transition between set of `linear` OR `radial` gradients
-- default `type` is `linear`
-- default `dir` is `0`
-- `start` MUST have the same length as `end`
-- `start` and `end` MUST have at least `2` elements for gradient to work
-<br />
-
-```typescript
-filter?: {
-    blur?: [start: number, end: number],
-    brightness?: number,
-    contrast?: number,
-    grayscale?: number,
-    hueRotate?: number,
-    saturate?: number,
-    sepia?: number,
-}
-```
-Allows to transition between filters.
-<br />
-
+# Components 
+This library is simple yet powerful. There is `useParallax` hook as well as wrapped `<UseParallax>` components for you to start with out of the box!
 
 ## `useParallax` hook
 It allows you to control <b>any</b> component and turn it into a <b>Parallax Component</b>.
@@ -241,6 +132,152 @@ Example:
     )}
 </UseParallax>
 ```
+
+
+## Parallax Component's Config API
+Inside the `pxConfig` you can pass following arguments:
+
+```ts
+interface UseParallaxAPI {
+    /* Specifies when to detect element based on scroll and window position */
+    startScroll? = 'top' | 'center' | 'bottom' | number; // --> 'bottom'
+    
+    /* Specifies how long (in px) the transition will take. */
+    endScroll?: number | '${number}%'; // --> '100%' of container's height
+
+    /* Offset animation by `number` of pixels before it starts transitioning. */
+    offset?: number; // --> 0
+
+    /* If set to `true`, transition will NOT be performed. */
+    disabled?: boolean; // --> false
+
+    /* If set to `true`, scroll transition will extend its length to fit all animations. */
+    extend?: boolean;
+
+    /* Creates Fade In smooth transition starting at `startScroll` position. */
+    fadeIn?: IParallaxAnimationProps;
+
+    /* Creates Fade Out smooth transition starting at `endScroll` position. */
+    fadeOut?: IParallaxAnimationProps;
+
+    /* Compose custom animation based on an array of keyframes. */
+    // NOTE: Do NOT use `fadeIn` or `fadeOut` with keyframes.
+    keyframes?: IParallaxKeyframe[];
+
+    /* Allows to pass custom styles via styled-components or other css modules */
+    className?: string;
+
+    // Pass `JSX Component` or a `Function as Children` 
+    children?: ((status: ParallaxStatus) => JSX.Element) | JSX.Element | React.ReactNode;
+}
+```
+
+
+## Parallax Supported Effects
+Most of the transitions are made to have the easiest syntax. Effects take an array with `start` and `end` properties to transition between for a specified amount of time (length of the component or custom length/offset values).
+
+`fadeIn` AND `fadeOut` take following arguments:
+
+```ts
+interface IParallaxAnimation {
+    /* Transitions transparency (0 - 1 ) */
+    opacity?: [start: number, end: number];
+
+    /* Transitions background color */
+    background?: [start: Color, end: Color];
+
+    /* Animates component's transformations */
+    transform?: TransformProps;
+
+    /* Smoothly animates gradient colors */
+    gradient?: GradientProps;
+
+    /* Transition filters */
+    filter?: FilterProps;
+}
+```
+
+## Properties' interface description
+Let's explain properties `Color`, `TransformProps`, `GradientProps` and `FilterProps`. <br />
+
+### `Color` Property
+Property `Color` MUST be either RGBA array:
+```ts 
+type RGBA = [r: number, g: number, b: number, a: number]
+``` 
+OR hexadecimal number `#000` | `#ffff` | `#rrggbb` | `#rrggbbaa`
+<br />
+
+
+### `Transform` Property
+Transformation is exactly like you would use it in CSS, but passed as an <b>Array</b> of values instead.
+So you'll pass the array of `start -> end` values.
+```ts
+interface TransformProps {
+    /* Translate component's position (X, Y) */
+    translate?: [
+        X: [start: number, end: number],
+        Y: [start: number, end: number]
+    ];
+
+    // NOTE: If `translate` is set, `translateX` and `translateY` will be ignored. */
+    /* Translate component's horizontal position */
+    translateX?: [start: number, end: number];
+
+    /* Translate component's horizontal position */
+    translateY?: [start: number, end: number];
+
+    /* Rescale component (1.0 is default) */
+    scale?: [start: number, end: number];
+
+    /* Rotate component by `number` degrees */
+    rotate?: [start: number, end: number];
+}
+```
+<br />
+
+
+### `Filter` Property
+Filters follow exactly the same syntax as `Transform` and properties are self-explanatory I suppose.
+
+```ts
+export interface FilterProps {
+    blur?: [start: number, end: number];
+    brightness?: [start: nmber, end: number];
+    contrast?: [start: numbuer, end: number];
+    grayscale?: [start: number, end: number];
+    hueRotate?: [start: number, end: number];
+    opacity?: [start: number, end: number];
+    saturate?: [start: number, end: number];
+    sepia?: [start: number, end: number];
+}
+```
+<br />
+
+
+### `Gradient` Property
+Now for the gradients to work we'll need tot take slighlty different approach.
+- Values `start` and `end` are <b>required</b>.
+- You MUST pass <b>at least 2 </b> values into the `Color[]` array
+- You MUST pass <b>the same</b> number of elements to both `start` and `end`
+- Value `type` is <i>optional</i> and defaults to `"linear"`
+- Value `dir` is <i>optional</i> and defaults to `[0, 0]`
+```ts
+export interface GradientProps {
+    /* Choose whether to use `linear` or `radial` gradient */
+    type?: "linear" | "radial" | undefined;
+
+    /* Animate (rotate) the gradient's curve */
+    dir?: [start: number, end: number] | undefined;
+
+    /* Array of colors to start with */
+    start: Color[];
+
+    /* Array of colors to finish animtation on */
+    end: Color[];
+}
+```
+
 
 ## Keyframes
 Keyframes have slightly different API. Each keyframe <b>require</b> parameters: `length` and `animations`.
