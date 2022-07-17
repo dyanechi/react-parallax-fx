@@ -81,7 +81,7 @@ Import package into your existing react component like so:
 Then you'll want to wrap your component between `<Parallax> MyComponent </Parallax>` JSX
 
 ```js
-    const MyComponent = (props) => {
+    const App = (props) => {
 
         const pxConfig = {
             ...
@@ -89,7 +89,7 @@ Then you'll want to wrap your component between `<Parallax> MyComponent </Parall
 
         return (
             <Parallax {...pxConfig} {...props}>
-                <MyComponent />
+                <YourComponent />
             </Parallax>
         )
     }
