@@ -6,14 +6,14 @@ This package adds support to create Parallax Components in React. Although there
 This version brings new experimental API including `useParallax` hook and `<UseParallax>` component. While this project is still in development, `Parallax` component from previous version works as in specification below in order to prevent conflicts.
 
 Starting this version we recommend to use `<UseParallax>` component which is utilizing the new `useParallax()` hook. You can import it to your project and use in sample like so:
-```typescript
+```js
 import { UseParallax } from 'react-parallax-pro'
 // ...
 
 const App = () => {
     // ...
 
-    const animation = {
+    const pxConfig = {
         // Possible values: "bottom" | "center" | "top" | number
         startScroll: "center",
         fadeIn: { /* ... */ },
@@ -23,14 +23,14 @@ const App = () => {
     }
 
     return (
-        <UseParallax {...animation} />
-            {({isTransitioning, inView}) =>
+        <UseParallax {...pxConfig} >
+            {({isTransitioning, inView}) => (
                 <YourComponent>
                     // ... The rest of components
 
                     // You can pass exposed variables into components as well, ex:
                 </YourComponent>
-            }
+            )}
         </UseParallax>
     )
 }
@@ -80,15 +80,15 @@ Import package into your existing react component like so:
 ## How to use
 Then you'll want to wrap your component between `<Parallax> MyComponent </Parallax>` JSX
 
-```typescript
-    const MyComponent = () => {
+```js
+    const MyComponent = (props) => {
 
         const pxConfig = {
             ...
         }
 
         return (
-            <Parallax {...pxConfig}>
+            <Parallax {...pxConfig} {...props}>
                 <MyComponent />
             </Parallax>
         )
@@ -219,7 +219,7 @@ Import:
 ```
 
 Then use like so:
-```typescript
+```js
 <UseParallax {...pxConfig}>
     <YourComponent />
 </UseParallax>
@@ -232,7 +232,7 @@ You can also use <b>Function as children</b> technique to get returned value `st
 All these values are <i>optional</i>, you can choose <i>any</i> and pass to other components.
 
 Example:
-```typescript
+```js
 <UseParallax {...pxConfig}>
     {({isTransitioning, inView}) => (
         <YourComponent status={isTransitioning} inView={inView}>
@@ -248,7 +248,8 @@ Keyframes have slightly different API. Each keyframe <b>require</b> parameters: 
 There is optional `extend: boolean` that if set to `true` will automatically expand container's animation length in order to fit the full transition:
 
 Example usage:
-```typescript
+```js
+import { UseParallax } from 'react-parallax-pro';
 const App = (props) => {
     
     const pxConfig = {
@@ -261,10 +262,14 @@ const App = (props) => {
             { length: 200, background: "#000" },
         ]
     }
-}
-    <UseParallax {...pxConfig} {...props}>
+
+    return (
+        <UseParallax {...pxConfig} {...props}>
         // ...
-    </UseParallax>
+        </UseParallax>
+    )
+}
+    
 ```
 
 # Support
