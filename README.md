@@ -64,7 +64,7 @@ Some of the key Features include:
 Add package to your dev dependencies
 
 ```
-    npm i --save-dev react-parallax-pro
+npm i --save-dev react-parallax-pro
 ```
 
 
@@ -73,25 +73,25 @@ Add package to your dev dependencies
 ## How to import
 Import package into your existing react component like so:
 ```typescript
-    import { Parallax } from 'react-parallax-pro';
+import { Parallax } from 'react-parallax-pro';
 ```
 
 ## How to use
 Then you'll want to wrap your component between `<Parallax> MyComponent </Parallax>` JSX
 
 ```js
-    const App = (props) => {
+const App = (props) => {
 
-        const pxConfig = {
-            ...
-        }
-
-        return (
-            <Parallax {...pxConfig} {...props}>
-                <YourComponent />
-            </Parallax>
-        )
+    const pxConfig = {
+        ...
     }
+
+    return (
+        <Parallax {...pxConfig} {...props}>
+            <YourComponent />
+        </Parallax>
+    )
+}
 ```
 
 # Components 
@@ -106,7 +106,7 @@ This is a component that can wrap other components to provide <b>Parallax</b> co
 At the moment the usage is following: <br />
 Import:
 ```typescript
-    import { UseParallax } from "react-parallax-pro";
+import { UseParallax } from "react-parallax-pro";
 ```
 
 Then use like so:
@@ -309,12 +309,62 @@ const App = (props) => {
     
 ```
 
+
+### Interface
+It's <b>important</b> Keyframes instead of array take `single` values, pretty much same as CSS properties.
+Hence instead of passing arrays, you can pass <i>any</i> supported property as is and the interpolations will be automatically calculated for you.
+NOTE: You MUST pass <b>at least 2 keyframes</b> for animation to work properly.
+
+
+```ts
+export interface IParallaxKeyframe extends IParallaxKeyframeAttributes {
+    /* REQUIRED - Length of animation in `px` */ 
+    length: HTMLValueType;
+
+    /* If true, animation will hold previous keyframe's state */
+    hold?: boolean;
+
+    /* Transform */
+    translate?: [X: number, Y: number];
+    translateX?: number;
+    translateY?: number;
+    scale?: number;
+    rotate?: number;
+
+    /* Opacity */
+    opacity?: number;
+
+    /* Background */
+    background?: Color;
+
+    /* Gradient */
+    gradient?: {
+        colors: Color[],
+        type?: 'linear' | 'radial' | undefined,
+        dir?: number
+    }
+
+    // Filters //
+    blur?: number;
+    brightness?: number;
+    contrast?: number;
+    grayscale?: number;
+    hueRotate?: number;
+    saturate?: number;
+    sepia?: number;
+```
+
+## Last Words
+Alright, that's all for now. This library is still in development and if you can, please let me know your thoughts on it! <br />
+
+What would you use it for?
+
 # Support
 
 Plese visit github repository here: https://github.com/dyanechi/react-parallax-pro if you'd like to contribute or have any questions, issues or anything else :) 
 
 ## TODO
-- Update API
+- Update API ✓
 - Improve control over animations
 - Add easing functions
 - Fix small bugs
