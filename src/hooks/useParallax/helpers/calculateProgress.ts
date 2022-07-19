@@ -1,60 +1,71 @@
-export const calculateProgress = (
+import { useCallback, useEffect, useState } from "react";
+
+export const useCalculateProgress = (
   _start: number,
   _length: number,
   _current: number,
   _offset?: number,
-  callback?: (values: {
-    isTransitioning: boolean;
-    result: number;
-    scrollHeight: number;
-  }) => void
+  _ease?: number
 ) => {
-  const start = _start + (_offset || 0); /*+ (offset || 0)*/
-  const end = start + _length;
-  const scrollHeight = end - start;
-  if (scrollHeight <= 0)
-    throw new Error("'scrollHeight' must be greater than zero");
+    // Hold current data
+    const [data, setData] = useState({
+        current: 0,
+        previous: 0,
+        rounded: 0,
+        ease: Math.max(0, Math.min(1, _ease ?? 1)),
+    })
 
-  // const current = config.startScroll + topScrollPosition;
-  const diff = _current - start;
-  const progress = diff / scrollHeight;
-  const result = progress < 0 ? 0 : progress > 1 ? 1 : progress;
-  // const status = (current < start) ? 'above' : (current > end) ? 'below' : 'in progress';
+    // Hold initial input state
+    const [input, setInput] = useState({
+        start: 0, /*+ (offset || 0)*/
+        end: 0,
+        scrollHeight: 0,
+    })
 
-  const isTransitioning = !!(result > 0 && result < 1);
-  callback && callback({ isTransitioning, result, scrollHeight });
-  // setStatus({
-  //     ...status,
-  //     isTransitioning: !!(result > 0 && result < 1),
-  // })
+    // Hold current transition state
+    const [status, setStatus] = useState({
+        progress: 0,
+        isTransitioning: false,
+    })
 
-  // console.info(
-  //     'Progress!\n',
-  //     `start: ${start}\n`,
-  //     `end: ${end}\n`,
-  //     `scrollHeight: ${scrollHeight}\n`,
-  //     `config startScroll: ${config.startScroll}\n`,
-  //     `manual startScroll: ${topScrollPosition + window.innerHeight}\n`,
-  //     `automated startScroll: ${getStartScrollValue(startScroll || "top")}\n`,
-  //     `current: ${current}\n`,
-  //     `diff: ${diff}\n`,
-  //     `progress: ${progress}\n`,
-  //     `result: ${result}\n`,
-  //     `isTransitioning: ${status.isTransitioning}`
-  // );
+    // Calculate progress with easing
+    const easeProgress = useCallback(() => {
+        setData({
+            ...data,
+            current: _current,
+            previous: data.previous + (data.current - data.previous) * data.ease,
+            rounded: Math.round(data.previous)
+        });
 
-  // console.info(
-  //     'Progress!\n',
-  //     `start: ${start}\n`,
-  //     `end: ${end}\n`,
-  //     `scrollHeight: ${scrollHeight}\n`,
-  //     `current: ${_current}\n`,
-  //     `diff: ${diff}\n`,
-  //     `progress: ${progress}\n`,
-  //     `result: ${result}\n`,
-  //     `isTransitioning: ${isTransitioning}`
-  // );
+        const diff = data.rounded - input.start;
+        const fullProgress = diff / input.scrollHeight;
+        setStatus({
+            ...status,
+            progress: fullProgress < 0 ? 0 : fullProgress > 1 ? 1 : fullProgress,
+            isTransitioning: !!(fullProgress > 0 && fullProgress < 1)
+        })
+    }, [_current, data.rounded])
+    
+    useEffect(() => {
+        requestAnimationFrame(easeProgress);
+    }, [easeProgress])
 
-  // setProgress(result);
-  return result;
+    useEffect(() => {
+        const start = _start + (_offset || 0);
+        const end = start + _length;
+        const scrollHeight = end - start;
+
+        setInput({
+            ...input,
+            start: start,
+            end: end,
+            scrollHeight: scrollHeight,
+        })
+    }, [_start, _length, _offset])
+
+    return {
+        ...status,
+        scrollHeight: input.scrollHeight
+        // scrollHeight,
+    };
 };

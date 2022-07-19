@@ -2,7 +2,7 @@
 
 This package adds support to create Parallax Components in React. Although there might be a few similar packages on the market, not all of them are the right suit for every project.
 
-## Version ^1.2.0
+## Version ^1.3.0
 This version brings new experimental API including `useParallax` hook and `<UseParallax>` component. While this project is still in development, `Parallax` component from previous version works as in specification below in order to prevent conflicts.
 
 Starting this version we recommend to use `<UseParallax>` component which is utilizing the new `useParallax()` hook. You can import it to your project and use in sample like so:
@@ -73,7 +73,7 @@ npm i --save-dev react-parallax-pro
 ## How to import
 Import package into your existing react component like so:
 ```typescript
-import { Parallax } from 'react-parallax-pro';
+import { UseParallax } from 'react-parallax-pro';
 ```
 
 ## How to use

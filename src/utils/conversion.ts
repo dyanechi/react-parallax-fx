@@ -1,4 +1,5 @@
-import { Color, IKeyframe, IParallaxAnimation, IParallaxKeyframe, IParallaxKeyframeAttributes, RGBA } from "../types";
+import { toInt } from "../hooks/useParallax/helpers/parsers";
+import { Color, IKeyframe, IParallaxAnimation, IParallaxAnimationProps, IParallaxKeyframe, RGBA } from "../types";
 import { SUPPORTED } from "./constants";
 
 export const getHexColor = (color: Color | string): string => {
@@ -20,22 +21,22 @@ export const getHexColor = (color: Color | string): string => {
 export const getRGBA = (color: Color): RGBA => {
   const arr: number[] = [];
   if (typeof color === "string") {
-    if (color.length === 4) color += "f";
-    else if (color.length === 7) color += "ff";
-    if (/^#[0-9a-fA-F]{8}$/i.test(color)) {
-      color
-        .replace("#", "")
-        .split(/(..)/g)
-        .filter((s) => s)
-        .forEach((s) => arr.push(Number("0x" + s)));
-
-      arr[arr.length - 1] = arr[arr.length - 1] / 255;
-    } else if (/^#[0-9a-fA-F]{4}$/i.test(color)) {
+    if (/^#[0-9a-fA-F]{3}$/i.test(color)) color += "f";
+    else if (/^#[0-9a-fA-F]{6}$/i.test(color)) color += "ff";
+    if (/^#[0-9a-fA-F]{4}$/i.test(color)) {
       color
         .replace("#", "")
         .split(/(.)/g)
         .filter((s) => s)
         .forEach((s) => arr.push(17 * Number("0x" + s)));
+
+      arr[arr.length - 1] = arr[arr.length - 1] / 255;
+    } else if (/^#[0-9a-fA-F]{8}$/i.test(color)) {
+      color
+        .replace("#", "")
+        .split(/(..)/g)
+        .filter((s) => s)
+        .forEach((s) => arr.push(Number("0x" + s)));
 
       arr[arr.length - 1] = arr[arr.length - 1] / 255;
     } else {
@@ -47,9 +48,6 @@ export const getRGBA = (color: Color): RGBA => {
     return arr as RGBA;
   }
   return color as RGBA;
-};
-export const getRGBAValues = (start: Color, end: Color): [RGBA, RGBA] => {
-  return [getRGBA(start), getRGBA(end)];
 };
 
 export const lerp = (
@@ -81,7 +79,7 @@ export const keyframesToParallaxAnimation = (
       // gradient: {},
       filter: {}
     };
-    Object.entries(start).forEach(([key,val]) => {
+    Object.entries(start).forEach(([key]) => {
       let o = {}
       if (key === 'gradient') {
         o['gradient'] = {
@@ -105,12 +103,42 @@ export const keyframesToParallaxAnimation = (
       else {
         o = {[key]: [start[key], end[key]]}
       }
-
       
       merged = {...merged, ...o};
     })
     console.log('Merged',merged);
       // requestAnimationFrame(() => runAnimations(merged, curProgress as number));
     return merged;
-  }
+}
+
+export const parallaxAnimationToKeyframes = (
+  animation: IParallaxAnimationProps | undefined
+) : IKeyframe<IParallaxKeyframe>[] | undefined => {
+  if (!animation) return undefined; // Should throw exception if issues will arise
+  const startFrame: IKeyframe<IParallaxKeyframe> = { start: 0, length: 0 };
+  const endFrame: IKeyframe<IParallaxKeyframe> = { start: 0, length: 0 };
+
+  Object.keys(animation).forEach(key => {
+    if (key === 'gradient') {
+      const g = animation.gradient!;
+      startFrame.gradient = { type: g.type, dir: g.dir![0], colors: g.start }
+      endFrame.gradient   = { type: g.type, dir: g.dir![1], colors: g.start }
+    } else if (key === 'translate') { 
+      startFrame.translate = animation.translate![0];
+      endFrame.translate   = animation.translate![1];
+    } else if (key === 'length') { 
+      startFrame.length = toInt(animation.length![0]);
+      endFrame.length   = toInt(animation.length![1]);
+      // console.log("Current Processing Length", toInt(animation.length));
+    } else {
+      const val = animation[key] as [start: number, end: number];
+      startFrame[key] = val[0];
+      endFrame[key] = val[1];
+      // console.log('Processing here', key, animation[key]);
+    }
+  })
+
+  console.info("Converted frames: ", [startFrame, endFrame])
+  return [startFrame, endFrame];
+}
 

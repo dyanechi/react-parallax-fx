@@ -17,3 +17,4 @@ types
 .storybook
 src/modules/ParallaxBckup.tsx
 bckup
+test
