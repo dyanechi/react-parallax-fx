@@ -1,4 +1,3 @@
-export * from './events';
 export * from './keyframe';
 export * from './legacy';
 export * from './parallax';

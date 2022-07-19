@@ -68,7 +68,27 @@ interface IParallaxAnimation {
     gradient?: GradientProps;
     filter?: FilterProps;
 }
-interface IParallaxAnimationProps extends IParallaxAnimation {
+interface IParallaxAnimationExposed {
+    opacity?: [start: number, end: number];
+    background?: [start: Color, end: Color];
+    translate?: [
+        X: [start: number, end: number],
+        Y: [start: number, end: number]
+    ];
+    translateX?: [start: number, end: number];
+    translateY?: [start: number, end: number];
+    scale?: [start: number, end: number];
+    rotate?: [start: number, end: number];
+    blur?: [start: number, end: number];
+    brightness?: [start: number, end: number];
+    contrast?: [start: number, end: number];
+    grayscale?: [start: number, end: number];
+    hueRotate?: [start: number, end: number];
+    saturate?: [start: number, end: number];
+    sepia?: [start: number, end: number];
+    gradient?: GradientProps;
+}
+interface IParallaxAnimationProps extends IParallaxAnimationExposed {
     length: HTMLValueType;
 }
 interface ParallaxStatus {
@@ -83,13 +103,14 @@ interface IParallaxProps {
     offset?: number;
     disabled?: boolean;
     extend?: boolean;
+    ease?: number;
     fadeIn?: IParallaxAnimationProps;
     fadeOut?: IParallaxAnimationProps;
     keyframes?: IParallaxKeyframe[];
     className?: string;
     children?: IParallaxChildren;
     render?(): React.ReactElement<React.ReactNode>;
-    callback?: () => void;
+    onTransitionChange?: () => void;
 }
 declare type IParallax = IParallaxProps & IParallaxAnimation;
 interface IParallaxKeyframeAttributes {
@@ -130,9 +151,12 @@ declare const UseParallax: ({ children, className, ...rest }: IParallax) => JSX.
 /**
  * This hook allows you to turn any component into Parallax Component
  */
-declare const useParallax: ({ startScroll, endScroll, fadeIn, fadeOut, keyframes, offset, disabled, extend, callback, }: IParallaxProps) => {
+declare const useParallax: ({ startScroll, endScroll, fadeIn, fadeOut, keyframes, offset, disabled, extend, ease, onTransitionChange, }: IParallaxProps) => {
     ref: (node?: Element | null | undefined) => void;
-    status: ParallaxStatus;
+    status: {
+        isTransitioning: boolean;
+        inView: boolean;
+    };
 };
 
 declare const getRGBA: (color: Color) => RGBA;

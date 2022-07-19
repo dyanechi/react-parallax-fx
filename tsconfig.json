@@ -31,6 +31,6 @@
     "sourceMap": true,
     "emitDeclarationOnly": true
   },
-  "include": [ "src", "test/events.ts" ],
+  "include": ["src"],
   "exclude": ["node_modules", "demo", ".stories", "webpack", "pkg", "demo", "types", "lib", "src/stories"]
 }

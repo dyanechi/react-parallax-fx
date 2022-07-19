@@ -1,4 +1,4 @@
-import Parallax from "./modules/Parallax";
+import Parallax from "./modules/LegacyParallax";
 import UseParallax from "./modules/UseParallax";
 import { useParallax } from "./hooks";
 import { getRGBA } from "./utils";

@@ -122,7 +122,7 @@ export const parallaxAnimationToKeyframes = (
     if (key === 'gradient') {
       const g = animation.gradient!;
       startFrame.gradient = { type: g.type, dir: g.dir![0], colors: g.start }
-      endFrame.gradient   = { type: g.type, dir: g.dir![1], colors: g.start }
+      endFrame.gradient   = { type: g.type, dir: g.dir![1], colors: g.end }
     } else if (key === 'translate') { 
       startFrame.translate = animation.translate![0];
       endFrame.translate   = animation.translate![1];
