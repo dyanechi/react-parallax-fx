@@ -101,7 +101,7 @@ export const keyframesToParallaxAnimation = (
       }
       
       else {
-        o = {[key]: [start[key], end[key]]}
+        o = {[key]: [start[key], end[key] ?? start[key]]}
       }
       
       merged = {...merged, ...o};

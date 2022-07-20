@@ -1,6 +1,6 @@
 {
   "name": "react-parallax-pro",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "author": "dyanechi",
   "description": "React Parallax FX Pro allows you to create Parallax components and animate them to your likings",
   "unpkg": "dist/index.js",
@@ -55,7 +55,8 @@
   "peerDependencies": {
     "react": "^16.x.x || ^17.x.x || ^18.x.x",
     "react-dom": "^16.x.x || ^17.x.x || ^18.x.x",
-    "styled-components": "^5.x.x"
+    "styled-components": "^5.x.x",
+    "react-intersection-observer": "^9.x.x"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",

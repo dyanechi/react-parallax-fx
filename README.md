@@ -359,6 +359,42 @@ Alright, that's all for now. This library is still in development and if you can
 
 What would you use it for?
 
+
+# FAQ
+
+### How to fix overflowing components?
+When animating transformation, such as `transform`, `scale` or `rotate` with `<UseParallax>` component you might notice overflows out of the container. This may cause various glitches.
+In order to fix it, simply wrap all your Parallax elements within a wrapper with `overflow: hidden` style.
+Example:
+```js
+<div style={{overflow: hidden}}>
+    <UseParallax><YourComponent1 /><UseParallax />
+    <UseParallax><YourComponent2 /><UseParallax />
+    <UseParallax><YourComponent3 /><UseParallax />
+</div>
+```
+
+### How to add share animation between components?
+In future versions you'll be able to use provider to set default values (that's in work currently).
+As of now you can create a `pxConfig` variable and apply it to multiple components. 
+```js
+// Your animation
+const pxConfig={ ... }
+
+const app = () => {
+    //...
+ 
+    return (
+        <div style={{overflow: hidden}}>
+            <UseParallax {...pxConfig}><YourComponent1 /><UseParallax />
+            <UseParallax {...pxConfig}><YourComponent2 /><UseParallax />
+            <UseParallax {...pxConfig}><YourComponent3 /><UseParallax />
+        </div>
+    )
+}
+```
+
+
 # Support
 
 Plese visit github repository here: https://github.com/dyanechi/react-parallax-pro if you'd like to contribute or have any questions, issues or anything else :) 
