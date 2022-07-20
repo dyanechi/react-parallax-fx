@@ -15,8 +15,7 @@ const defaultUseParallax: UseParallaxConfig = {
     ease: 0.1,
     easeFn: 'linear',
     offset: 0,
-    extend: true,
-    keyframes: []
+    extend: true
 }
 
 const UseParallaxContext = createContext(defaultUseParallax);

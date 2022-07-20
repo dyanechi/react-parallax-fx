@@ -161,6 +161,8 @@ export const useParallax = ({
       const frames = framesArr!.map(f => {
         return { ...f, start: 0, length: toInt(f.length, target.offsetHeight) }
       });
+
+      if (frames.length < 2) throw new Error("Must provide at least 2 keyframes");
       keyConfig.init(frames, easeFn, (length => {
         if (extend && length > config.scrollHeight) {
           setConfig({
