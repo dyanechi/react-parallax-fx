@@ -1,6 +1,7 @@
-import Parallax from "./modules/LegacyParallax";
-import UseParallax from "./modules/UseParallax";
+import {
+    Parallax as LegacyParallax,
+    UseParallax,
+    UseParallaxProvider
+} from './modules';
 import { useParallax } from "./hooks";
-import { getRGBA } from "./utils";
-
-export { Parallax, UseParallax, getRGBA, useParallax };
+export { LegacyParallax, UseParallax, useParallax, UseParallaxProvider };

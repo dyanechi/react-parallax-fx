@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import React$1 from 'react';
+import React$1, { PropsWithChildren } from 'react';
 
 interface ILegacyParallax {
     startScroll?: "top" | "center" | "bottom" | number;
@@ -148,6 +148,19 @@ declare const Parallax: React$1.FC<ILegacyParallax>;
 
 declare const UseParallax: ({ children, className, ...rest }: IParallax) => JSX.Element;
 
+interface UseParallaxConfig {
+    startScroll?: "top" | "center" | "bottom" | number;
+    ease?: number;
+    easeFn?: 'linear' | 'parabolic';
+    extend?: boolean;
+    offset?: number;
+    keyframes?: IParallaxKeyframe[];
+}
+interface UseParallaxProviderProps extends PropsWithChildren {
+    config: UseParallaxConfig;
+}
+declare const UseParallaxProvider: ({ children, config }: UseParallaxProviderProps) => JSX.Element;
+
 /**
  * This hook allows you to turn any component into Parallax Component
  */
@@ -159,6 +172,4 @@ declare const useParallax: ({ startScroll, endScroll, fadeIn, fadeOut, keyframes
     };
 };
 
-declare const getRGBA: (color: Color) => RGBA;
-
-export { Parallax, UseParallax, getRGBA, useParallax };
+export { Parallax as LegacyParallax, UseParallax, UseParallaxProvider, useParallax };

@@ -1,7 +1,6 @@
 import { useLayoutEffect, useState } from 'react';
 import { IKeyframe, IKeyframeEvents, IKeyframesData, IKeyframesProps } from '../../types';
 
-
 export const useKeyframes = <T>() => {
     const [config, setConfig] = useState<IKeyframesData<T> & IKeyframeEvents>({
         totalLength: 0,
@@ -16,7 +15,7 @@ export const useKeyframes = <T>() => {
 
     const init = (cfg: IKeyframesProps<T>, easeFn?: 'linear' | 'parabolic', callback?: (len: number) => void) => {
         if (config.isInitialized) {
-            console.warn("useKeyframes 'config' is already initialized.");
+            // console.warn("useKeyframes 'config' is already initialized.");
         } else {
             const frames = new Array<IKeyframe<T>>()
             let length = 0,
@@ -29,10 +28,10 @@ export const useKeyframes = <T>() => {
                 frames.push({...curFrame, start: length + f.start})
                 length += f.length;
             })
-            console.log(frames);
+            // console.log(frames);
             setConfig({...config, frames: frames, totalLength: length, isInitialized: true, easeFn: easeFn||'linear'});
             callback && callback(length);
-            console.log("'useKeyframe': initialized");
+            // console.log("'useKeyframe': initialized");
         }
     }
 
@@ -118,7 +117,7 @@ export const useKeyframes = <T>() => {
     } 
 
     useLayoutEffect(() => {
-        console.info('frames updated');
+        // console.info('frames updated');
 
     }, [config.frames])
 

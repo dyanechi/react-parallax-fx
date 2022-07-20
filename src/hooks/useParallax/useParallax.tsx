@@ -25,7 +25,6 @@ import { useKeyframes } from "./useKeyframes";
 export const useParallax = ({
   startScroll,
   endScroll,
-
   fadeIn,
   fadeOut,
   keyframes,
@@ -83,7 +82,7 @@ export const useParallax = ({
     let FadeIn = parallaxAnimationToKeyframes(fadeIn || []);
     let FadeOut = parallaxAnimationToKeyframes(fadeOut || []);
 
-    console.info(FadeIn, FadeOut);
+    // console.info(FadeIn, FadeOut);
     const fullLength = Math.max(
       config.endScroll,
       target.offsetHeight,
@@ -185,22 +184,19 @@ export const useParallax = ({
     requestAnimationFrame(() => runAnimations(animation, curProgress as number));
   }
   
-
   // --- R E N D E R   E F F E C T S --- //
 
   // Update when initialization is complete
 
-
-
   // Call every time `progress` updates
   useLayoutEffect(() => {
     !disabled && isTransitioning && keyConfig.isInitialized && requestAnimationFrame(keyframesAnimation);
-    console.log(progress)
+    // console.log(progress)
   }, [progress, isTransitioning, keyConfig.isInitialized, disabled]);
 
   // Call a onTransitionChange once transitioning status changed
   useLayoutEffect(() => {
-    console.info(`Transitioning changed to: `, isTransitioning);
+    // console.info(`Transitioning changed to: `, isTransitioning);
     target && requestAnimationFrame(cleanupAnimations);
     onTransitionChange && onTransitionChange();
   }, [isTransitioning, onTransitionChange, target, keyConfig.isInitialized]);

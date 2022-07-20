@@ -7,7 +7,7 @@ import { ILegacyParallax } from "../types";
 import { lerp, lerpRGBA } from "../utils";
 
 // ANCHOR: Main Component
-const Parallax: React.FC<ILegacyParallax> = ({
+export const Parallax: React.FC<ILegacyParallax> = ({
   startScroll,
   endScroll,
   speed,
