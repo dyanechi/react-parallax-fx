@@ -9,11 +9,12 @@ export const useKeyframes = <T>() => {
         currentFrame: 0,
         extend: false,
         isInitialized: false,
-        easing: 0.1,
+        ease: 0.1,
+        easeFn: 'linear',
         onChange: () => {}
     })
 
-    const init = (cfg: IKeyframesProps<T>, callback?: (len: number) => void) => {
+    const init = (cfg: IKeyframesProps<T>, easeFn?: 'linear' | 'parabolic', callback?: (len: number) => void) => {
         if (config.isInitialized) {
             console.warn("useKeyframes 'config' is already initialized.");
         } else {
@@ -29,7 +30,7 @@ export const useKeyframes = <T>() => {
                 length += f.length;
             })
             console.log(frames);
-            setConfig({...config, frames: frames, totalLength: length, isInitialized: true});
+            setConfig({...config, frames: frames, totalLength: length, isInitialized: true, easeFn: easeFn||'linear'});
             callback && callback(length);
             console.log("'useKeyframe': initialized");
         }
@@ -51,8 +52,22 @@ export const useKeyframes = <T>() => {
 
         const start = curFrame.start / config.totalLength;
         const end = start + curFrame.length / config.totalLength;
+
         const slope = 1 / (end - start);
-        const curProgress = (slope * progress) - (end / (end - start)) + 1;
+        const curProgress = (config.easeFn === 'linear') ?
+        (slope * progress) - (end / (end - start)) + 1 :
+        (end-start)/(end-start)/(end-start)/(end-start)*(progress-start)*(progress-start)
+        
+        
+        // const C = (end - start) / (end - start) / (end - start) / (end - start);
+        // const linearProgress = (slope * progress) - (end / (end - start)) + 1;
+        // f = C(x - W)*(x-H) + V
+        // Compresion, Horizontal, Vertical
+        // const W = start;
+        // const V = 0;
+        // const parabolicProgress = C*(progress-W)*(progress-W);
+
+        // console.log(linearProgress, parabolicProgress)
 
         return { curFrame, nextFrame, curProgress };
     }

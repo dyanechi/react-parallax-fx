@@ -33,6 +33,7 @@ export const useParallax = ({
   disabled,
   extend,
   ease,
+  easeFn,
   onTransitionChange,
 }: IParallaxProps) => {
   // --- S T A T E S / V A R I A B L E S --- //
@@ -82,20 +83,21 @@ export const useParallax = ({
     let FadeIn = parallaxAnimationToKeyframes(fadeIn || []);
     let FadeOut = parallaxAnimationToKeyframes(fadeOut || []);
 
+    console.info(FadeIn, FadeOut);
     const fullLength = Math.max(
       config.endScroll,
       target.offsetHeight,
       (toInt(fadeIn?.length || 0)) +
       (toInt(fadeOut?.length || 0)),
     )
-    if (FadeIn) {
+    if (fadeIn) {
       const length = toInt(fadeIn!.length, fullLength);
       FadeIn[0].length = length;
       FadeIn[1].start = length;
       Object.assign(framesArr, FadeIn);
       // console.log('FadeIn:', FadeIn)
     }
-    if (FadeOut) {
+    if (fadeOut) {
       const length = toInt(fadeOut!.length, fullLength);
       FadeOut[0] = {...FadeOut[0], start: fullLength - length, length: length }
       FadeOut[1].start = fullLength;
@@ -160,7 +162,7 @@ export const useParallax = ({
       const frames = framesArr!.map(f => {
         return { ...f, start: 0, length: toInt(f.length, target.offsetHeight) }
       });
-      keyConfig.init(frames, (length => {
+      keyConfig.init(frames, easeFn, (length => {
         if (extend && length > config.scrollHeight) {
           setConfig({
             ...config,

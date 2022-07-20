@@ -96,7 +96,12 @@ export const keyframesToParallaxAnimation = (
       } else if (SUPPORTED.TRANSFORM.includes(key)) {
         o['transform'] = {
           ...merged.transform,
-          [key]: [start[key] || 0, (end[key] ?? start[key]) || 0]
+          [key]: (key === 'translate') ? [
+             [start!.translate![0], (end?.translate?.[0] ?? start!.translate![0]) || 0], 
+             [start!.translate![1], (end?.translate?.[1] ?? start!.translate![1]) || 0], 
+            ] : [start[key] || 0, (end[key] ?? start[key]) || 0]
+          //   :
+          // [key]: [start[key] || 0, (end[key] ?? start[key]) || 0]
         }
       }
       
