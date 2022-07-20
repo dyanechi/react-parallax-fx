@@ -79,8 +79,8 @@ export const useParallax = ({
 
   function getFadeAnimations() {
     let framesArr = new Array<IKeyframe<IParallaxKeyframe>>();
-    let FadeIn = parallaxAnimationToKeyframes(fadeIn);
-    let FadeOut = parallaxAnimationToKeyframes(fadeOut);
+    let FadeIn = parallaxAnimationToKeyframes(fadeIn || []);
+    let FadeOut = parallaxAnimationToKeyframes(fadeOut || []);
 
     const fullLength = Math.max(
       config.endScroll,

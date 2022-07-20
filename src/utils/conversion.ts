@@ -91,12 +91,12 @@ export const keyframesToParallaxAnimation = (
       } else if (SUPPORTED.FILTERS.includes(key)) {
         o['filter'] = {
           ...merged.filter,
-          [key]: [start[key] || 0, end[key] || start[key]]
+          [key]: [start[key] || 0, (end[key] ?? start[key]) || 0]
         }
       } else if (SUPPORTED.TRANSFORM.includes(key)) {
         o['transform'] = {
           ...merged.transform,
-          [key]: [start[key] || 0, (end && end[key]) || 0]
+          [key]: [start[key] || 0, (end[key] ?? start[key]) || 0]
         }
       }
       
@@ -106,15 +106,15 @@ export const keyframesToParallaxAnimation = (
       
       merged = {...merged, ...o};
     })
-    console.log('Merged',merged);
+    console.log('Merged',merged, start, end);
       // requestAnimationFrame(() => runAnimations(merged, curProgress as number));
     return merged;
 }
 
 export const parallaxAnimationToKeyframes = (
-  animation: IParallaxAnimationProps | undefined
-) : IKeyframe<IParallaxKeyframe>[] | undefined => {
-  if (!animation) return undefined; // Should throw exception if issues will arise
+  animation: IParallaxAnimationProps
+) : IKeyframe<IParallaxKeyframe>[] => {
+  if (!animation) throw new Error('Animation not provided or is empty'); // Should throw exception if issues will arise
   const startFrame: IKeyframe<IParallaxKeyframe> = { start: 0, length: 0 };
   const endFrame: IKeyframe<IParallaxKeyframe> = { start: 0, length: 0 };
 
