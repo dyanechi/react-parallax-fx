@@ -51,6 +51,7 @@ export const useParallax = ({
     startScroll: getStartScrollValue(startScroll || "bottom"),
     endScroll: endScroll ? toInt(endScroll) : 300,
     scrollHeight: 0,
+    offsetTop: 0
     // speed: (speed || 20) / 100,
   });
 
@@ -59,7 +60,7 @@ export const useParallax = ({
 
   // Keep transition progress (number between 0 - 1)
   const { progress, isTransitioning } = useCalculateProgress(
-    (target && target.offsetTop) || 0,
+    config.offsetTop,
     config.endScroll,
     config.startScroll + topScrollPosition,
     offset,
@@ -75,6 +76,22 @@ export const useParallax = ({
            m === "center" ? topScrollPosition + height / 2 :
            m === "bottom" ? topScrollPosition + height :
            offset || topScrollPosition + height;
+  }
+
+  function getTargetOffsetTop() {
+    let offsetTop = target.offsetTop;
+    let i = 0;
+    let parent = target.offsetParent as HTMLElement;
+    while(parent !== null && parent.tagName !== "BODY" && i < 30) {
+      offsetTop += parent.offsetTop;
+      parent = parent.offsetParent as HTMLElement;
+      i++;
+    }
+    const scrollStart = offsetTop + getStartScrollValue(startScroll || 'top');
+    if(i >= 30) console.error("There is too much recursion within AnimationContainer component. Please check and fix if possible.");
+
+    // console.info("scrollStart Updated:", scrollStart, offsetTop);
+    return offsetTop;
   }
 
   function getFadeAnimations() {
@@ -114,8 +131,13 @@ export const useParallax = ({
   const initialize = () => {
     if (target) {
       target.style.background = getHexColor(
-        (fadeIn?.background?.[0]) || (fadeIn?.background?.[0]) || ""
+        (fadeIn?.background?.[0]) || (fadeOut?.background?.[0]) || ""
       );
+
+      
+      // console.log("Initialized: ", config);
+      // setConfig({...config, offsetTop: getTargetOffsetTop()});
+      // setConfig({...config, startScroll: scrollStart});
 
       (keyframes || fadeIn || fadeOut) && requestAnimationFrame(keyframesAnimation);
     }
@@ -168,9 +190,14 @@ export const useParallax = ({
           setConfig({
             ...config,
             scrollHeight: length,
-            endScroll: length
+            endScroll: length,
+            offsetTop: getTargetOffsetTop()
           });
-        };
+          target && window.addEventListener("resize", () => handleResize(length, length));
+        } else {
+          target && window.addEventListener("resize", () => handleResize(config.endScroll, length));
+        }
+        
         requestAnimationFrame(cleanupAnimations);
       }));
     }
@@ -188,6 +215,16 @@ export const useParallax = ({
   
   // --- R E N D E R   E F F E C T S --- //
 
+  const handleResize = (endScroll: number, scrollHeight: number) => {
+    setConfig({
+      ...config,
+      endScroll,
+      scrollHeight,
+      startScroll: getStartScrollValue(startScroll || 'bottom'),
+      offsetTop: getTargetOffsetTop(),
+    })
+  }
+
   // Update when initialization is complete
 
   // Call every time `progress` updates
@@ -203,7 +240,8 @@ export const useParallax = ({
     onTransitionChange && onTransitionChange();
   }, [isTransitioning, onTransitionChange, target, keyConfig.isInitialized]);
 
-  useEffect(() => initialize(), [target]);
+  useEffect(() => { initialize() }, [target]);
+  // useEffect(() => {console.info("Config Updated:", config)}, [config]);
   useEffect(() => {}, []);
 
   return {

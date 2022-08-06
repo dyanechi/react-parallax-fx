@@ -111,7 +111,7 @@ export const keyframesToParallaxAnimation = (
       
       merged = {...merged, ...o};
     })
-    console.log('Merged',merged, start, end);
+    // console.log('Merged',merged, start, end);
       // requestAnimationFrame(() => runAnimations(merged, curProgress as number));
     return merged;
 }

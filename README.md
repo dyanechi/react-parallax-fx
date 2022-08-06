@@ -2,7 +2,10 @@
 
 This package adds support to create Parallax Components in React. Although there might be a few similar packages on the market, not all of them are the right suit for every project.
 
-## Version ^1.3.0
+## Version ^1.5.0
+This version allows you to change between "global" and "local" element object to choose whether you prefer to perform animation based on local offset of an element (for example a child container) or global offset that is derived by recursive addition of each parent's offset until reaching body element.
+
+## Version ^1.4.0
 This version brings new experimental API including `useParallax` hook and `<UseParallax>` component. While this project is still in development, `Parallax` component from previous version works as in specification below in order to prevent conflicts.
 
 Starting this version we recommend to use `<UseParallax>` component which is utilizing the new `useParallax()` hook. You can import it to your project and use in sample like so:
